@@ -1,45 +1,66 @@
-# Performance Analysis of Logs (PAL) Tool
-[![licence badge]][licence]
-[![stars badge]][stars]
-[![forks badge]][forks]
-[![issues badge]][issues]
+# PAL Modern
 
-[licence badge]:https://img.shields.io/badge/license-MIT-blue.svg
-[stars badge]:https://img.shields.io/github/stars/clinthuffman/PAL.svg
-[forks badge]:https://img.shields.io/github/forks/clinthuffman/PAL.svg
-[issues badge]:https://img.shields.io/github/issues/clinthuffman/PAL.svg
+PAL entre dans une phase de modernisation dans ce depot.
+La base historique VB.NET et PowerShell est encore presente pour reference, mais le nouveau point d'entree du projet est maintenant une fondation Python avec interface web locale.
 
-[licence]:https://github.com/clinthuffman/PAL/blob/master/LICENSE.md
-[stars]:https://github.com/clinthuffman/PAL/stargazers
-[forks]:https://github.com/clinthuffman/PAL/network
-[issues]:https://github.com/clinthuffman/PAL/issues
+## Ce qui a change
 
-## Project Description
-Ever have a performance problem, but don't know what performance counters to collect or how to analyze them?
-The PAL (Performance Analysis of Logs) tool is a powerful tool that reads in a performance monitor counter log and analyzes it using known thresholds.
+- une nouvelle application Python dans `backend/`
+- une nouvelle interface moderne dans `frontend/`
+- une copie des fichiers XML de seuils dans `resources/thresholds/`
+- une premiere API pour explorer les fichiers de seuils, leurs heritages et leurs analyses
 
-## Features
- - Thresholds files for most of the major Microsoft products such as IIS, MOSS, SQL Server, BizTalk, Exchange, and Active Directory.
- - An easy to use GUI interface which makes creating batch files for the PAL.ps1 script.
- - A GUI editor for creating or editing your own threshold files.
- - Creates an HTML based report for ease of copy/pasting into other applications.
- - Analyzes performance counter logs for thresholds using thresholds that change their criteria based on the computer's role or hardware specs.
- 
- ## Requirements
- The current stable release version requires the Microsoft .NET 4.7.2 framework feature to be enabled on the Windows device.
+## Lancer la nouvelle application
 
-## How to download
-If you wish to install the PAL tool, then download `PAL_Setup`. It contains the Microsoft installer files. Right-click and go to Properties of the zip file, select Unblock, and then click OK. Extract the zip file to a new, empty folder, and then run Setup.
+Depuis le dossier `PAL` :
 
-If you just want to run it without installation, then download `PAL_FlatFile`. Right-click and go to Properties of the zip file, select Unblock, and then click OK. Extract the zip file to a new, empty folder, and then run PALWizard.exe to use the tool.
+```powershell
+python .\backend\run_dev.py
+```
 
-Both files can be downloaded from the [releases section](https://github.com/clinthuffman/PAL/releases)
+Puis ouvre :
 
-## How to use
-Run PALWizard.exe to use the PAL Wizard tool. Otherwise, use PAL.ps1 directly.
+```text
+http://127.0.0.1:8765
+```
 
-## Feedback
-Your feedback is welcome via the [issues section](https://github.com/clinthuffman/PAL/issues)
+## Importer un log
 
-## Contributing
-Your contributions are very welcome by submitting a Pull Request.
+Depuis l'interface web :
+
+- clique sur `Choisir un fichier CSV ou BLG`
+- selectionne un fichier `.csv` ou `.blg`
+- clique sur `Importer`
+
+Ce qui est deja supporte :
+
+- `CSV` et `BLG` : import depuis la nouvelle interface
+- lancement du moteur historique `PAL.ps1` avec le threshold file selectionne
+- prise en compte des questions PAL et de leurs valeurs
+- production du rapport HTML PAL complet dans `resources/reports/legacy/`
+
+Les fichiers importes sont stockes temporairement dans `resources/uploads/`.
+Les rapports HTML generes sont ecrits dans `resources/reports/`.
+
+## Verifier le backend
+
+```powershell
+python -m unittest discover .\backend\tests
+```
+
+## Structure
+
+```text
+PAL/
+  backend/
+  frontend/
+  resources/
+  docs/
+  PAL2/   # base historique a migrer progressivement
+```
+
+## Notes
+
+- Le moteur historique d'analyse PowerShell n'est pas encore reecrit.
+- La premiere etape de modernisation expose surtout le patrimoine metier pour preparer la migration complete.
+- Les fichiers XML de seuils sont deja integres a la nouvelle base.

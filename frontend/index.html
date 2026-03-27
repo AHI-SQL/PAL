@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAL Modern</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Performance Analysis of Logs</p>
+          <h1>PAL on a modern foundation.</h1>
+          <p class="lead">
+            Python backend and a local web interface to browse threshold files,
+            prepare the engine migration, and move away from the legacy VB.NET + PowerShell stack.
+          </p>
+        </div>
+        <div class="hero-panel">
+          <div class="hero-stat">
+            <span id="stat-threshold-files">--</span>
+            <small>threshold files</small>
+          </div>
+          <div class="hero-stat">
+            <span id="stat-analyses">--</span>
+            <small>available analyses</small>
+          </div>
+          <div class="hero-stat">
+            <span id="stat-questions">--</span>
+            <small>configuration questions</small>
+          </div>
+        </div>
+      </header>
+
+      <section class="upload-stage card surface-reveal">
+        <div class="upload-stage-copy">
+          <p class="section-kicker">Upload</p>
+          <h2>Load a log for analysis</h2>
+          <p>
+            The modernized stack accepts <code>.csv</code> and <code>.blg</code> files.
+            The backend stores them temporarily, reads CSV input, and extracts useful BLG metadata through Windows tools.
+          </p>
+        </div>
+        <form id="upload-form" class="upload-form">
+          <label class="upload-input-shell" for="log-file">
+            <span>Select a CSV or BLG file</span>
+            <input id="log-file" name="file" type="file" accept=".csv,.blg" />
+          </label>
+          <button id="upload-button" type="submit">Upload</button>
+        </form>
+        <div id="upload-status" class="upload-status"></div>
+        <div id="analysis-config" class="analysis-config"></div>
+        <div id="upload-result" class="upload-result hidden"></div>
+      </section>
+
+      <main class="workspace">
+        <section class="sidebar card surface-reveal">
+          <div class="sidebar-head">
+            <div>
+              <p class="section-kicker">Library</p>
+              <h2>Threshold files</h2>
+            </div>
+            <input id="search-input" class="search-input" type="search" placeholder="Search by file name or description" />
+          </div>
+          <div id="threshold-list" class="threshold-list"></div>
+        </section>
+
+        <section class="content card surface-reveal">
+          <div id="detail-empty" class="empty-state">
+            <p class="section-kicker">Explore</p>
+            <h2>Select a threshold file</h2>
+            <p>
+              This modernized version already exposes the inherited XML threshold files, their categories,
+              analyses, questions, and the main rules that will continue to move into the Python engine.
+            </p>
+          </div>
+
+          <div id="detail-panel" class="detail-panel hidden">
+            <div class="detail-header">
+              <div>
+                <p id="detail-file-name" class="section-kicker"></p>
+                <h2 id="detail-display-name"></h2>
+                <p id="detail-description" class="detail-description"></p>
+              </div>
+              <div class="detail-meta">
+                <div>
+                  <span>Version</span>
+                  <strong id="detail-version"></strong>
+                </div>
+                <div>
+                  <span>Language</span>
+                  <strong id="detail-language"></strong>
+                </div>
+                <div>
+                  <span>Owner</span>
+                  <strong id="detail-owner"></strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-grid">
+              <section class="mini-card">
+                <h3>Inheritance</h3>
+                <div id="detail-inheritances" class="chip-list"></div>
+              </section>
+              <section class="mini-card">
+                <h3>Categories</h3>
+                <div id="detail-categories" class="chip-list"></div>
+              </section>
+              <section class="mini-card">
+                <h3>Questions</h3>
+                <div id="detail-questions" class="stack-list"></div>
+              </section>
+            </div>
+
+            <section class="analysis-section">
+              <div class="analysis-head">
+                <div>
+                  <p class="section-kicker">Analyses</p>
+                  <h3>Migration-ready inventory</h3>
+                </div>
+                <span id="detail-analysis-count" class="analysis-count"></span>
+              </div>
+              <div id="detail-analyses" class="analysis-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
