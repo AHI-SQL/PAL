@@ -1,48 +1,48 @@
 # PAL Modern
 
-PAL entre dans une phase de modernisation dans ce depot.
-La base historique VB.NET et PowerShell est encore presente pour reference, mais le nouveau point d'entree du projet est maintenant une fondation Python avec interface web locale.
+PAL is entering a modernization phase in this repository.
+The historical VB.NET and PowerShell codebase is still present for reference, but the new project entry point is now a Python foundation with a local web interface.
 
-## Ce qui a change
+## What Has Changed
 
-- une nouvelle application Python dans `backend/`
-- une nouvelle interface moderne dans `frontend/`
-- une copie des fichiers XML de seuils dans `resources/thresholds/`
-- une premiere API pour explorer les fichiers de seuils, leurs heritages et leurs analyses
+- a new Python application in `backend/`
+- a new modern interface in `frontend/`
+- a copy of the threshold XML files in `resources/thresholds/`
+- an initial API to explore threshold files, their inheritance, and their analyses
 
-## Lancer la nouvelle application
+## Run The New Application
 
-Depuis le dossier `PAL` :
+From the `PAL` folder:
 
 ```powershell
 python .\backend\run_dev.py
 ```
 
-Puis ouvre :
+Then open:
 
 ```text
 http://127.0.0.1:8765
 ```
 
-## Importer un log
+## Import A Log
 
-Depuis l'interface web :
+From the web interface:
 
-- clique sur `Choisir un fichier CSV ou BLG`
-- selectionne un fichier `.csv` ou `.blg`
-- clique sur `Importer`
+- click `Choose a CSV or BLG file`
+- select a `.csv` or `.blg` file
+- click `Import`
 
-Ce qui est deja supporte :
+What is already supported:
 
-- `CSV` et `BLG` : import depuis la nouvelle interface
-- lancement du moteur historique `PAL.ps1` avec le threshold file selectionne
-- prise en compte des questions PAL et de leurs valeurs
-- production du rapport HTML PAL complet dans `resources/reports/legacy/`
+- `CSV` and `BLG`: import through the new interface
+- launch of the legacy `PAL.ps1` engine with the selected threshold file
+- support for PAL questions and their values
+- generation of the full PAL HTML report in `resources/reports/legacy/`
 
-Les fichiers importes sont stockes temporairement dans `resources/uploads/`.
-Les rapports HTML generes sont ecrits dans `resources/reports/`.
+Uploaded files are stored temporarily in `resources/uploads/`.
+Generated HTML reports are written to `resources/reports/`.
 
-## Verifier le backend
+## Verify The Backend
 
 ```powershell
 python -m unittest discover .\backend\tests
@@ -56,11 +56,11 @@ PAL/
   frontend/
   resources/
   docs/
-  PAL2/   # base historique a migrer progressivement
+  PAL2/   # historical codebase to migrate progressively
 ```
 
 ## Notes
 
-- Le moteur historique d'analyse PowerShell n'est pas encore reecrit.
-- La premiere etape de modernisation expose surtout le patrimoine metier pour preparer la migration complete.
-- Les fichiers XML de seuils sont deja integres a la nouvelle base.
+- The legacy PowerShell analysis engine has not been rewritten yet.
+- The first modernization phase mainly exposes the business knowledge and assets to prepare the full migration.
+- The threshold XML files are already integrated into the new foundation.
